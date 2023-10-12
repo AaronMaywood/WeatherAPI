@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<div>
+		<p id="title"></p>
+		<p id="body"></p>
+	</div>
+	<script>
+		async function getWeather(){
+			// 130010 は東京を意味する地点IDです。
+			const res = await fetch('https://weather.tsukumijima.net/api/forecast/city/130010');
+			const json = await res.json();
+			document.querySelector('#title').innerHTML = json.title;
+			document.querySelector('#body').innerHTML = json.description.bodyText;
+			// 他にもたとえばこんな情報がある
+			console.log('明日の風速:', json.forecasts[1].detail.wind);
+			console.log('明日の0〜6時の降水確率:', json.forecasts[1].chanceOfRain.T00_06);
+			console.log('明日の6〜12時の降水確率:', json.forecasts[1].chanceOfRain.T06_12);
+			console.log('明日の12〜18時の降水確率:', json.forecasts[1].chanceOfRain.T12_18);
+			console.log('明日の18〜24時の降水確率:', json.forecasts[1].chanceOfRain.T18_24);
+		}
+		getWeather();
+	</script>
+</body>
+</html>
